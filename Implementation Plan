@@ -1,0 +1,209 @@
+# MightyTips.com – Complete Website Build
+
+Build a full MightyTips.com clone as a **Next.js 14 (App Router)** application using React, TypeScript, and Tailwind CSS. All content will be powered by rich mock/static data (no backend required). The site will be visually stunning, fully responsive, and animated.
+
+## Proposed Changes
+
+---
+
+### Project Setup
+
+#### [NEW] `package.json`, config files, `tailwind.config.ts`, etc.
+- Initialize with `create-next-app` (TypeScript + Tailwind + App Router)
+- Add extra deps: `lucide-react` (icons), `framer-motion` (animations), `clsx`
+
+---
+
+### Global Styles & Design System
+
+#### [NEW] `app/globals.css`
+- CSS variables for color palette (dark bg `#1a1a1a`, gold `#d4af37`, blue `#0066cc`, etc.)
+- Google Fonts (Inter)
+- Smooth scroll, base resets
+
+---
+
+### Mock Data Layer
+
+#### [NEW] `lib/data/` directory
+- `predictions.ts` – accumulator tips, match predictions by league
+- `bookmakers.ts` – bookmaker objects (name, logo, rating, bonus, promo)
+- `authors.ts` – author profiles
+- `articles.ts` – news articles
+- `leagues.ts` – league definitions
+- `casinos.ts` – casino listing data
+
+---
+
+### Layout Components
+
+#### [NEW] `components/layout/Header.tsx`
+- Logo (SVG text logo), mega-menu (hover dropdowns), auth buttons, search toggle
+- Mobile: hamburger menu with slide-out overlay, nested expandable sections
+
+#### [NEW] `components/layout/Footer.tsx`
+- 5-column layout with links by category
+- Mobile: accordion-style collapsible sections
+- Trust badges, language switcher, copyright
+
+#### [NEW] `components/layout/MobileMenu.tsx`
+- Full-screen animated overlay navigation
+
+---
+
+### Shared/UI Components
+
+#### [NEW] `components/ui/`
+- `BookmakerCard.tsx` – logo, rating, bonus, promo copy button, bet/review links
+- `PredictionCard.tsx` – teams, odds, league, author, read prediction link
+- `AccumulatorCard.tsx` – bet type badge, teams, description, odds table
+- `AuthorCard.tsx` – image, name, bio, link
+- `NewsCard.tsx` – image, headline, author
+- `StatCard.tsx` – icon, number, label (for "Why Trust Us")
+- `SocialCard.tsx` – platform, follower count, follow link
+- `PromoPopup.tsx` – modal overlay with bookmaker promo, close button
+
+---
+
+### Homepage
+
+#### [NEW] `app/page.tsx`
+Assembles all homepage sections:
+1. **Bookmaker Showcase** – featured + grid of top bookmakers
+2. **Mega Accumulator Tip** – tip cards with odds table
+3. **League Predictions** – grid cards per league (Serie A, La Liga, PL, Ligue 1, Bundesliga)
+4. **Why Trust Us** – stats grid + description
+5. **Our Authors** – author card grid
+6. **Bookmaker Comparison** – continent/country two-column table
+7. **Casino Comparison** – same pattern
+8. **Social Media** – platform cards
+9. **More News** – article grid
+
+---
+
+### Inner Pages
+
+#### [NEW] `app/football-betting-tips/page.tsx`
+- Category listing page for all tip types
+
+#### [NEW] `app/football-predictions/page.tsx`
+- Today / Tomorrow / Weekend tab navigation
+- League-specific sections with prediction cards
+
+#### [NEW] `app/bookmakers/page.tsx`
+- Bookmaker listing by region/country
+- Filter bar (high odds, fast payout, payment method)
+- Full bookmaker cards
+
+#### [NEW] `app/bookmakers/betting-apps/page.tsx`
+- App listing organized by bookmaker/country
+
+#### [NEW] `app/bonuses/page.tsx`
+- Bonus listing with bookmaker cards
+
+#### [NEW] `app/online-casinos/page.tsx`
+- Casino listing by region
+
+#### [NEW] `app/news/page.tsx`
+- News article grid with "Show more" button
+
+#### [NEW] `app/news/[slug]/page.tsx`
+- Full article detail page
+
+#### [NEW] `app/football-predictions/[slug]/page.tsx`
+- Individual match prediction detail page
+
+#### [NEW] `app/author/[slug]/page.tsx`
+- Author profile page with their tips and articles
+
+---
+
+### Popup System
+
+#### [NEW] `components/PromoPopupManager.tsx`
+- Shows popup after 3s delay on first visit (localStorage flag)
+- Can be closed, uses mock bookmaker data
+
+---
+
+## Verification Plan
+
+### Automated Tests
+None (no backend); visual/functional verification via browser.
+
+### Manual Verification
+1. Run `npm run dev` in `c:\Users\Administrator\Desktop\Mightytips Code`
+2. Open `http://localhost:3000` in browser
+3. Check each homepage section renders correctly
+4. Test navigation mega-menu hover dropdowns on desktop
+5. Resize to mobile (≤768px) — verify hamburger menu, single-column layout
+6. Click "Copy promo code" — verify clipboard toast appears
+7. Wait 3 seconds — verify promo popup appears
+8. Navigate to `/football-predictions`, `/bookmakers`, `/news` pages
+9. Click an author card → verify author profile page renders
+10. Click a news article → verify article detail page renders
+
+---
+
+## Phase 8: Admin Dashboard
+
+This phase introduces a completely new section under `/admin` to serve as the central operational hub for managing the frontend content.
+
+### Proposed Changes for Admin Dashboard
+
+#### [NEW] `app/admin/layout.tsx`
+- Custom layout for the admin section, completely separate from the frontend.
+- Sidebar navigation with collapsible menus.
+- Top header with Dark Mode toggle and Admin Profile dropdown.
+- Main content area for dashboard views.
+
+#### [NEW] `app/admin/page.tsx`
+- Dashboard overview/home with high-level statistics and quick links.
+
+#### [NEW] `app/admin/pages/page.tsx` (CMS)
+- List view of all frontend pages.
+- Action buttons to Edit, Delete, or Add New Page.
+- Simple mock editor interface for managing text/sections.
+
+#### [NEW] `app/admin/media/page.tsx` (Media & Assets)
+- Tabs for Logo Management, Banner Management, and Image Management.
+- File upload mock UI.
+- Grid view of current assets with delete/assign options.
+
+#### [NEW] `app/admin/brands/page.tsx` (Brand Management)
+- List of associated betting/casino brands.
+- "Add New Brand" form with fields for name, rating, overview text, logo upload, and affiliate URLs.
+
+#### [NEW] `app/admin/promotions/page.tsx` (Promotions)
+- Dedicated table for managing marketing campaigns and casino promos.
+- Toggles for active/inactive status.
+
+#### [NEW] `app/admin/settings/page.tsx` (System & Integration)
+- Forms for global SEO Configuration.
+- Live Chat Integration input fields.
+- Affiliate Operations management UI.
+- Dynamic URL routing management table.
+
+### Design System & Sync
+- The admin dashboard will use a clean, modern, and dark-themed UI (with a toggleable light/dark mode if requested) using Tailwind CSS and components similar to Shadcn UI.
+- **Frontend-Backend Synchronization**: While currently powered by local mock data arrays in `lib/data`, the admin UI will be built conceptually to manage this data. Since we cannot persist data to a database yet, we will use React State/Context or local storage within the admin dashboard to simulate CRUD operations dynamically for the demonstration.
+
+---
+
+## Final Phase: Complete Full-Stack Dynamic Migration
+
+To make the application 100% dynamic and completely remove reliance on static `lib/data` files, we will implement the following:
+
+### 1. Build Remaining Admin Interfaces
+- **[NEW] `app/admin/authors/page.tsx`**: Create the CRUD interface for managing Authors. Connect it to `/api/authors`.
+- **[NEW] `app/admin/predictions/page.tsx`**: Create the CRUD interface for managing Predictions. Connect it to `/api/predictions`.
+- **Update Sidebar**: Add navigation links for "Authors" and "Predictions" to `components/admin/Sidebar.tsx`.
+
+### 2. Database Seeding Tool
+- **[NEW] `app/api/admin/seed/route.ts`**: Create a secure API endpoint that automatically reads the rich mock data from `lib/data/*` and strictly inserts it into the actual MongoDB clustered database. This ensures the site doesn't load blank for the user after the switch.
+
+### 3. Frontend Database Integration (Server Components)
+- **Refactor `app/page.tsx`**: Replace static imports with direct `Mongoose` queries (`Bookmaker.find()`, `Prediction.find()`, etc.) using `connectToDatabase()`.
+- **Refactor Listing Pages**: Update `/football-predictions`, `/bookmakers`, `/news`, and `/author` to query the DB directly.
+- **Refactor Dynamic Routes**: Update `/news/[slug]`, `/football-predictions/[slug]`, and `/author/[slug]` to fetch the specific document from MongoDB instead of finding it in the static arrays.
+- **Delete Local Data**: Remove the `lib/data/` files entirely once integration is rock solid.

@@ -1,0 +1,252 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-primary: #111111;
+  --bg-secondary: #1a1a1a;
+  --bg-card: #222222;
+  --gold: #d4af37;
+  --gold-light: #f0cf60;
+  --blue-accent: #0066cc;
+  --border: #333333;
+  --text-primary: #ffffff;
+  --text-secondary: #b0b0b0;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer components {
+  .container-main {
+    @apply max-w-[1280px] mx-auto px-4 md:px-6;
+  }
+
+  .section-pad {
+    @apply py-12 md:py-16;
+  }
+
+  .section-heading {
+    @apply text-2xl md:text-3xl font-bold text-white mb-6;
+  }
+
+  .gold-text {
+    color: var(--gold);
+  }
+
+  .card-base {
+    @apply bg-[#222222] border border-[#333333] rounded-lg p-4 transition-all duration-200;
+  }
+
+  .card-hover {
+    @apply hover:bg-[#2a2a2a] hover:border-[#444444] hover:shadow-lg hover:-translate-y-0.5;
+  }
+
+  .btn-primary {
+    @apply bg-[#0066cc] hover:bg-[#0055aa] text-white font-semibold px-4 py-2 rounded-md transition-all duration-200 text-sm cursor-pointer inline-block text-center;
+  }
+
+  .btn-gold {
+    @apply bg-[#d4af37] hover:bg-[#b8960c] text-black font-semibold px-4 py-2 rounded-md transition-all duration-200 text-sm cursor-pointer inline-block text-center;
+  }
+
+  .btn-outline {
+    @apply border border-[#444444] hover:border-[#0066cc] text-white hover:text-[#0066cc] font-medium px-4 py-2 rounded-md transition-all duration-200 text-sm cursor-pointer inline-block text-center;
+  }
+
+  .link-blue {
+    @apply text-[#0066cc] hover:text-[#3388dd] hover:underline transition-colors duration-150;
+  }
+
+  .link-gold {
+    @apply text-[#d4af37] hover:text-[#f0cf60] transition-colors duration-150;
+  }
+
+  .badge {
+    @apply text-xs font-bold px-2 py-1 rounded uppercase tracking-wide;
+  }
+
+  .badge-gold {
+    @apply badge bg-[#d4af37] text-black;
+  }
+
+  .badge-blue {
+    @apply badge bg-[#0066cc] text-white;
+  }
+
+  .badge-green {
+    @apply badge bg-green-600 text-white;
+  }
+
+  .star-rating {
+    color: var(--gold);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #1a1a1a;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #666;
+  }
+
+  /* Nav dropdown */
+  .nav-dropdown {
+    @apply absolute top-full left-0 bg-[#1a1a1a] border border-[#333333] rounded-b-lg shadow-2xl min-w-[220px] z-50 animate-slide-down;
+  }
+
+  /* Mega menu */
+  .mega-menu {
+    @apply absolute top-full left-1/2 -translate-x-1/2 bg-[#1a1a1a] border border-[#333333] rounded-b-lg shadow-2xl z-50 animate-slide-down;
+  }
+}
+
+/* Gradient dividers */
+.gradient-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+  margin: 2px 0;
+}
+
+/* Table styles */
+.odds-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.odds-table th {
+  background-color: #222;
+  color: #b0b0b0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 8px 12px;
+  text-align: center;
+}
+
+.odds-table td {
+  padding: 10px 12px;
+  border-top: 1px solid #333;
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+.odds-value {
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+/* Tag chips */
+.chip {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid #444;
+  color: #b0b0b0;
+  background: #1a1a1a;
+}
+
+/* Animated underline for nav items */
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #d4af37;
+  transition: width 0.2s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Accent line */
+.accent-line {
+  width: 48px;
+  height: 3px;
+  background: linear-gradient(90deg, #d4af37, #f0cf60);
+  border-radius: 2px;
+  margin-bottom: 16px;
+}
+
+/* Hide Default Google Translate Widget UI */
+iframe.goog-te-banner-frame {
+  display: none !important;
+}
+
+body {
+  top: 0 !important;
+  /* Prevents the body from shifting down when google translate is active */
+}
+
+.skiptranslate>iframe.goog-te-banner-frame {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+.goog-logo-link {
+  display: none !important;
+}
+
+.goog-te-gadget {
+  color: transparent !important;
+  font-size: 0px !important;
+  display: none !important;
+}
+
+.goog-tooltip {
+  display: none !important;
+}
+
+.goog-tooltip:hover {
+  display: none !important;
+}
+
+.goog-text-highlight {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
