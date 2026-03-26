@@ -26,33 +26,44 @@ export const dynamic = 'force-dynamic';
 
 const getHomepageData = unstable_cache(
     async () => {
-        await connectToDatabase();
+        try {
+            await connectToDatabase();
 
-        const mapDoc = (doc: any) => {
-            const plain = JSON.parse(JSON.stringify(doc));
-            plain.id = plain.slug || plain._id;
-            if (doc.publishedAt) {
-                const d = new Date(doc.publishedAt);
-                plain.publishedAt = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-            }
-            return plain;
-        };
+            const mapDoc = (doc: any) => {
+                const plain = JSON.parse(JSON.stringify(doc));
+                plain.id = plain.slug || plain._id;
+                if (doc.publishedAt) {
+                    const d = new Date(doc.publishedAt);
+                    plain.publishedAt = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+                }
+                return plain;
+            };
 
-        const [bookmakersDocs, authorsDocs, articlesDocs, allPredictionsDocs, accumulatorTipsDocs] = await Promise.all([
-            Bookmaker.find({}).sort({ rating: -1 }).limit(10).lean(),
-            Author.find({}).limit(4).lean(),
-            Article.find({}).sort({ publishedAt: -1 }).limit(3).lean(),
-            Prediction.find({ predictionType: { $ne: 'accumulator' } }).sort({ matchDate: 1 }).lean(),
-            Prediction.find({ predictionType: 'accumulator' }).lean()
-        ]);
+            const [bookmakersDocs, authorsDocs, articlesDocs, allPredictionsDocs, accumulatorTipsDocs] = await Promise.all([
+                Bookmaker.find({}).sort({ rating: -1 }).limit(10).lean(),
+                Author.find({}).limit(4).lean(),
+                Article.find({}).sort({ publishedAt: -1 }).limit(3).lean(),
+                Prediction.find({ predictionType: { $ne: 'accumulator' } }).sort({ matchDate: 1 }).lean(),
+                Prediction.find({ predictionType: 'accumulator' }).lean()
+            ]);
 
-        return {
-            bookmakers: bookmakersDocs.map(mapDoc),
-            featuredAuthors: authorsDocs.map(mapDoc) as any[],
-            recentArticles: articlesDocs.map(mapDoc) as any[],
-            allPredictions: allPredictionsDocs.map(mapDoc) as any[],
-            accumulatorTips: accumulatorTipsDocs.map(mapDoc) as any[]
-        };
+            return {
+                bookmakers: bookmakersDocs.map(mapDoc),
+                featuredAuthors: authorsDocs.map(mapDoc) as any[],
+                recentArticles: articlesDocs.map(mapDoc) as any[],
+                allPredictions: allPredictionsDocs.map(mapDoc) as any[],
+                accumulatorTips: accumulatorTipsDocs.map(mapDoc) as any[]
+            };
+        } catch (error) {
+            console.error('Homepage data fetch failed, serving empty fallback.', error);
+            return {
+                bookmakers: [],
+                featuredAuthors: [] as any[],
+                recentArticles: [] as any[],
+                allPredictions: [] as any[],
+                accumulatorTips: [] as any[]
+            };
+        }
     },
     ['homepage-data'],
     { revalidate: 3600, tags: ['homepage'] }
